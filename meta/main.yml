@@ -1,0 +1,13 @@
+dependencies: []
+galaxy_info:
+  author: Jim Witte
+  description: postfix for sending email notifications
+  license: "license (MIT)"
+  min_ansible_version: 2.3.1
+  platforms:
+  - name: Ubuntu
+    versions:
+    - xenial
+  galaxy_tags:
+    - email
+    - postfix
