@@ -1,0 +1,4 @@
+---
+# vars for jimwitte.postfix
+postfix_admin_email: "my_email@xample.com"
+postfix_inet_interfaces: "loopback-only"  # postfix default is "all"

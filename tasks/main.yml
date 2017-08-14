@@ -1,0 +1,42 @@
+---
+# tasks file for jimwitte.postfix
+- name: set postfix option type to internet site
+  debconf:
+    name: "postfix"
+    question: "postfix/main_mailer_type"
+    value: "'Internet Site'"
+    vtype: "string"
+
+- name: set postfix option name
+  debconf:
+    name: "postfix"
+    question: "postfix/mailname"
+    value: "{{ansible_fqdn}}"
+    vtype: "string"
+
+- name: install postfix
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - "postfix"
+    - "mailutils"
+
+- name: set postfix interface
+  lineinfile:
+    dest: "/etc/postfix/main.cf"
+    regexp: "^inet_interfaces"
+    line: "inet_interfaces = {{ postfix_inet_interfaces }}"
+    state: present
+  notify:
+    - restart postfix
+
+- name: create root email alias
+  lineinfile:
+    dest: "/etc/aliases"
+    regexp: "^root"
+    line: "root{{':'}} {{ postfix_admin_email }}"
+    state: "present"
+  notify:
+    - newaliases
+    - restart postfix

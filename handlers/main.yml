@@ -1,0 +1,10 @@
+---
+# handlers file for jimwitte.postfix
+- name: newaliases
+  command: newaliases
+
+- name: restart postfix
+  service:
+    name: postfix
+    enabled: "yes"
+    state: restarted
